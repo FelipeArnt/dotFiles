@@ -1,7 +1,3 @@
-#!/usr/env/c
-
-/*-=-ArntShell-=-*/
-
 # Arnt Shell
 
  A implementação da shell é dividida em três partes: Parser, Executor e Subsistema da Shell

@@ -1,3 +1,7 @@
+#!/usr/env/c
+
+/*-=-ArntShell-=-*/
+
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>

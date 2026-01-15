@@ -45,7 +45,8 @@ As regras de gramática shell são **SimpleCommands** e **Pipelines**.
 
 ### SimpleCommand
 
-- SimpleCommand é uma sequência de parâmetros opcionais seguidos de uma palavra blank-separeted com a opção de redirecionamento intercalado. 
+SimpleCommand é uma sequência de parâmetros opcionais seguidos de uma palavra blank-separeted com a opção de redirecionamento intercalado. 
+
 - A primeira palavra é o comando a ser executado, e as palavras seguintes, se existirem, são argumentos para o comando. Se o nome de um comando for fornecido, as atribuições de parâmetros modificam o ambiente do comando quando ele é executado. 
 - O valor de um simples comando é o seu "exit status", ou 128 + o signal number se o terminar com um signal. Por exemplo: `echo foo` é um simples comando com argumentos.
 

@@ -33,12 +33,12 @@ Outros subsistemas que completam a shell são:
 
 ## Utilizando Lex e Yacc para implementação do Parser
 
-Para implementar o parser foram utilizadas duas ferramentas UNIX: Lex e Yacc. Tais ferramentas são usadas na implementação de compiladores, interpretadores e preprocessadores. Um parser é dividido em duas partes: um Lexical Analyzer ou Lexer e um Parser que processa os tokens de acordo com a gramática e constrói a Command Table.
+Para implementar o parser foram utilizadas duas ferramentas UNIX: `Lex` e `Yacc`. Tais ferramentas são usadas na implementação de compiladores, interpretadores e preprocessadores. Um parser é dividido em duas partes: um Lexical Analyzer ou Lexer e um Parser que processa os tokens de acordo com a gramática e constrói a Command Table.
 
 
-<img width="420" height="210" alt="image" src="https://github.com/user-attachments/assets/da3dec1f-370b-4a78-818f-c31a38f90371" />
+<img width="520" height="320" alt="image" src="https://github.com/user-attachments/assets/da3dec1f-370b-4a78-818f-c31a38f90371" />
 
-Os tokens são descritos em um arquivo shell.l utilizando de expressões regulares. O arquivo shell.l é processado com o programa **`lex`** que gera o Lexical Analyzer. 
+Os tokens são descritos em um arquivo **`shell.l`** utilizando de expressões regulares. O arquivo **`shell.l`** é processado com o programa **`lex`** que gera o Lexical Analyzer. 
 
 As "grammar rules" utilizadas pelo parser são descritas em um arquivo **`shell.y`** usando "syntax expressions" explicadas em breve. O arquivo **`shell.y`** é processado com o programa **yacc** que gera um programa **`parser`**. Ambas as ferramentas utilizadas, lex e yacc, possuem "standard commands" no UNIX. Tais comandos podem ser utilizados para implementar compiladores de alta complexidade. Para a shell gash, foi feito o uso de um subset de ambas ferramentas para construir a "command table" necessária para a shell.
 

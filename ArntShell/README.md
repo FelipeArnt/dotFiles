@@ -33,14 +33,24 @@ Outros subsistemas que completam a shell são:
 
 Para implementar o parser foram utilizadas duas ferramentas UNIX: Lex e Yacc. Tais ferramentas são usadas na implementação de compiladores, interpretadores e preprocessadores. Um parser é dividido em duas partes: um Lexical Analyzer ou Lexer e um Parser que processa os tokens de acordo com a gramática e constrói a Command Table.
 
-# --TO-DO-- Figura Processo shell
+# <!--TO-DO--> Figura Processo shell
 
 Os tokens são descritos em um arquivo shell.l utilizando de expressões regulares. O arquivo shell.l é processado com o programa **`lex`** que gera o Lexical Analyzer.
 
-As regras de gramática shell são **SimpleCommands** e **pipelines**.
+As regras de gramática shell são **SimpleCommands** e **Pipelines**.
+
+#### SimpleCommand
 
 - SimpleCommand é uma sequência de parâmetros opcionais seguidos de uma palavra blank-separeted com a opção de redirecionamento intercalado. 
-
 - A primeira palavra é o comando a ser executado, e as palavras seguintes, se existirem, são argumentos para o comando. Se o nome de um comando for fornecido, as atribuições de parâmetros modificam o ambiente do comando quando ele é executado. 
+- O valor de um simples comando é o seu "exit status", ou 128 + o signal number se o terminar com um signal. Por exemplo: `echo foo` é um simples comando com argumentos.
 
-- O valor de um simples comando é o seu "exit status", ou 128 + o signal number se o terminar com um signal. Por exemplo: `echo foo`
+
+#### Pipelines
+
+Um Pipeline é, ou um SimpleCommand, ou uma sequência de dois ou mais SimpleCommands onde cada comando é separado um do outro por um "|" ou "|&". 
+
+- Quando os comandos são separados por "|", a saída padrão do primeiro comando é conectada à entrada padrão do próximo. "|&" é uma abreviação de "2>&1 |", que conecta tanto a saída padrão, quanto o erro padrão do comando à entrada padrão do próximo. 
+- O valor de um pipeline é o valor do último comando, a menos que o pipeline seja precedido de "!". Nesse caso, o valor recebe o "inverso lógico" do valor do último comando. Por exemplo: echo foo | sed 's/foo/bar/' é um pipeline, onde o output (foo + uma nova linha) do primeiro comando é passado para o input do segundo.
+- Se um pipeline é precedido por um `coproc`, ele é executado como um coprocessado; Um two-way pipe é estabelecido entre o pipeline e a parent shell.
+- O shell pode ler ou escrever no coprocesso por meio dos operadores de redirecionamento '>&p' e '<&p' ou com 'print -p' e 'read -p'. Um pipeline não pode ser precedido por 'coproc' e '!' simultaneamente. Se o controle de tarefas estiver ativo, o coprocesso pode ser tratado, exceto em entrada e saída, como uma tarefa em segundo plano comum.

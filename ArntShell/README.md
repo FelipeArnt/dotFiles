@@ -48,9 +48,9 @@ As regras de gramática shell são **SimpleCommands** e **Pipelines**.
 
 #### Pipelines
 
-Um Pipeline é, ou um SimpleCommand, ou uma sequência de dois ou mais SimpleCommands onde cada comando é separado um do outro por um "|" ou "|&". 
+Um Pipeline é, ou um SimpleCommand, ou uma sequência de dois ou mais SimpleCommands onde cada comando é separado um do outro por um "|" ou "|&". Quando os comandos são separados por "|", a saída padrão do primeiro comando é conectada à entrada padrão do próximo. 
 
-Quando os comandos são separados por "|", a saída padrão do primeiro comando é conectada à entrada padrão do próximo. "|&" é uma abreviação de "2>&1 |", que conecta tanto a saída padrão, quanto o erro padrão do comando à entrada padrão do próximo. O valor de um pipeline é o valor do último comando, a menos que o pipeline seja precedido de "!". Nesse caso, o valor recebe o "inverso lógico" do valor do último comando. 
+"|&" é uma abreviação de "2>&1 |", que conecta tanto a saída padrão, quanto o erro padrão do comando à entrada padrão do próximo. O valor de um pipeline é o valor do último comando, a menos que o pipeline seja precedido de "!". Nesse caso, o valor recebe o "inverso lógico" do valor do último comando. 
 
 Por exemplo: 
 

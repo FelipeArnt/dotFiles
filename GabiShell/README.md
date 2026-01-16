@@ -1,16 +1,22 @@
-# gash -  Gabi shell 
+
+
+
+# ESTUDOS
+
+
+## gash -  Gabi shell 
 
  A implementação da shell **`gash`** é dividida em três partes: **Parser** , **Executor** e **Subsistema da Shell**
 
 
- ## Parser
+ ### Parser
 
  O Parser é o componente de software que faz a leitura da linha de comandos, por exemplo "pwd" e coloca em uma estrutura de dados chamada Command Table que armazena os comandos que serão executados.
 
 ----
 
 
-## Executor
+### Executor
 
  O Executor vai pegar a Command Table criada pelo parser e, para todo SimpleCommand no array será criado um novo processo. Se necessário, também criará pipes para comunicar o output de um dos processos para o input do próximo. Adicionalmente, irá redirecionar o standard input, standard output, e standard error se houver qualquer redirecionamento. 
 
@@ -22,7 +28,7 @@ Se existe um redirecionamento para errfile como ">& errfile" o stderr de todos o
 
 ----
 
-## Shell Subsystems
+### Shell Subsystems
 
 Outros subsistemas que completam a shell são:
 
@@ -31,7 +37,7 @@ Outros subsistemas que completam a shell são:
 - SubShells: Argumentos entre `` são executados e o output é enviado como um input para a shell.
 
 
-## Utilizando Lex e Yacc para implementação do Parser
+### Utilizando Lex e Yacc para implementação do Parser
 
 Para implementar o parser foram utilizadas duas ferramentas UNIX: `Lex` e `Yacc`. Tais ferramentas são usadas na implementação de compiladores, interpretadores e preprocessadores. Um parser é dividido em duas partes: um Lexical Analyzer ou Lexer e um Parser que processa os tokens de acordo com a gramática e constrói a Command Table.
 
@@ -45,10 +51,10 @@ As "grammar rules" utilizadas pelo parser são descritas em um arquivo **`shell.
 
 ----  
 
-## Shell Grammar
+### Shell Grammar
 As regras de gramática shell são **SimpleCommand** e **Pipeline**.
 
-### SimpleCommand
+#### SimpleCommand
 
 SimpleCommand é uma sequência de parâmetros opcionais seguidos de uma palavra blank-separeted com a opção de redirecionamento intercalado. 
 
@@ -56,7 +62,7 @@ SimpleCommand é uma sequência de parâmetros opcionais seguidos de uma palavra
 - O valor de um simples comando é o seu "exit status", ou 128 + o signal number se terminar com um signal. Por exemplo: `echo foo` é um simples comando com argumento.
 
 
-### Pipelines
+#### Pipelines
 
 Um Pipeline é, ou um SimpleCommand, ou uma sequência de dois ou mais SimpleCommands onde cada comando é separado um do outro por um "|" ou "|&". Quando os comandos são separados por "|", a saída padrão do primeiro comando é conectada à entrada padrão do próximo. 
 

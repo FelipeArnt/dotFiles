@@ -1,4 +1,4 @@
-# gash - Gabi shell 
+# gash -  Gabi shell 
 
  A implementação da shell **`gash`** é dividida em três partes: **Parser** , **Executor** e **Subsistema da Shell**
 
@@ -66,16 +66,11 @@ Por exemplo:
 
 - echo foo | sed 's/foo/bar/' é um pipeline, onde o output (foo + uma nova linha) do primeiro comando é passado para o input do segundo.
 - Se um pipeline é precedido por um `coproc`, ele é executado como um coprocessado; Um two-way pipe é estabelecido entre o pipeline e a parent shell.
-- O shell pode ler ou escrever no coprocesso por meio dos operadores de redirecionamento '>&p' e '<&p' ou com 'print -p' e 'read -p'. 
+- O shell pode ler ou escrever no coprocesso por meio dos operadores de redirecionamento '>&p' e '<&p' ou com 'print -p' e 'read -p'.
 - Um pipeline não pode ser precedido por 'coproc' e '!' simultaneamente. Se o controle de tarefas estiver ativo, o coprocesso pode ser tratado, exceto em entrada e saída, como uma tarefa em segundo plano comum.
 
 
-
-
-
-
-
-
+----
 
 
 
@@ -84,3 +79,6 @@ Por exemplo:
 https://www.ibm.com/docs/en/zos/3.1.0?topic=shell-grammar
 https://brennan.io/2015/01/16/write-a-shell-in-c/
 https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
+https://medium.com/@santiagobedoa/coding-a-shell-using-c-1ea939f10e7e
+https://www.geeksforgeeks.org/c/making-linux-shell-c/
+https://github.com/JohnHau/mis/wiki/Linux--write-your-own-Shell

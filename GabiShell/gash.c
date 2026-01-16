@@ -1,131 +1,76 @@
-/*Gabi Shell*/
-#include <stdio.h>
-#include <stdlib.h>
-#define gash_RL_BUFFSIZE 1024
-/*---Gash---*/
+#include "gash.h"
 
-int main(int argc, char **argv)
-{
-  gash_loop();
+/*
+ *----------------------------------------------------------------------------------------------------------------*\
+ * Estudando --> Referências no final do arquivo README.md                                                         |
+ *----------------------------------------------------------------------------------------------------------------*\
+ * ac = contador de argumentos;                                                                                    \
+ * av = vetor de argumentos;                                                                                       |
+ * execvp() = Troca o process image atual por um novo process image;                                               \
+ * v = "vetor", p = "path";                                                                                        |
+ * char **av = {"ls", "-la", NULL};                                                                                \
+ * execvp ("ls", av);                                                                                              |
+ *----------------------------------------------------------------------------------------------------------------*\
+ * R --> Read          --> gash_read_line() -> lê a linha de comando que foi digitada.                             |
+ * E --> Evaluate      --> gash_execute()   -> Decide se é builtin ou comando externo,faz fork/exec se necessário. |
+ * P --> Print/Execute --> printf/perror;   -> Mostra prompt, saídas e erros.                                      |
+ * L --> loop          --> while(status);   -> Repete até o usuário sair (ex: builtin "exit").                     |
+ *----------------------------------------------------------------------------------------------------------------*\
+ * [Entry point para uma shell sem loop]                                                                           |
+ *----------------------------------------------------------------------------------------------------------------*|
+ * int main (int ac, char **av){                                                                                   |
+ * (void) ac;                                                                                                      |
+ *  int status;                                                                                                    \
+ *  // processo filho                                                                                              |
+ *  if (fork() == 0)                                                                                               |
+ *    execvp(av[1], av + 1); // Recebe um array de argumentos e usa o PATH para achar o executável.                |
+ *  wait(&status);                                                                                                 \
+ * }                                                                                                               |
+ *----------------------------------------------------------------------------------------------------------------*|
+ * [Explicação do vetor de argumentos (av)]                                                                        |
+ *----------------------------------------------------------------------------------------------------------------*\
+ * [comando] -> [argumento] [argumento]                                                                            \
+ * 1. tokens --> [ls]                                                                                              |
+ * 2. tokens --> [-la]                                                                                             |
+ * 3. tokens --> [arquivo]                                                                                         \
+ * [ls] --> [-la]-[arquivo]                                                                                            |
+ *----------------------------------------------------------------------------------------------------------------*|
+ * [Explicação do uso do while()]                                                                                  |
+ *----------------------------------------------------------------------------------------------------------------*|
+ * 1. get line --> gash_get_line(void)
+ * 2. get tokens -> gettok()
+ *----------------------------------------------------------------------------------------------------------------*|
+*/
 
-  return EXIT_SUCCESS;
-}
 
-// Loop da shell 
-void gash_loop(void)
-{
-  char *line;
-  char **args;
-  int status;
+char *gash_read_line(void) {
 
-  do {
-    printf("> ");
+  char *buf;
+  size_t bufsize;
+  char cwd[BUFSIZE];
 
+
+  buf = NULL; 
+  
+  p("> ");  
+
+
+  if getline(&buf, &bufsize, stdin == - 1) {
+    buf = NULL;
+    if (feof(stdin)){ p(RED"[gash]:[ EOF ]!!!"RST); }
+    else { p(RED"[gash]: Getline falhou!"RST); }
+ 
+ }
+  return buf;
+  }
+/*Entry point*/
+int main(int ac, char **av) {
+char *line;
+ while(0xCE77) { /*Getline*/
     line = gash_read_line();
-    args = gash_split_line();
-    status = gash_execute();
-
-    free(line);
-    free(args);
-    while(status);
-  }
-}
-
-// Executor da shell 
-void gash_launch(char **args)
-{
-  pid_t , wpid
-  int status;
-
-  pid = fork();
-  if (pid == 0){
-    //processo filho
-    if (execvp(args[0], args) == -1){
-      perror("[gash]");
-    }
-    exit(EXIT_FAILURE);
-  } else if (pid < 0) {
-    //erro no fork
-    perror("[gash]");
-  } else {
-    //processo pai
-    do {
-      wpid = waitpid(pid, &status, WUNTRACED);
-    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-  }
-//<!--TOOD--!> 
-}
-return 1;
-
-#define GASH_TOK_BUFFSIZE 64
-#define GASH_TOK_DELIM "\t\r\n\a"
-char **gash_split_line(char *line)
-{
-  int bufzise = GASH_TOK_BUFFSIZE, position = 0;
-  char **tokens = malloc(bufsize * sizeof(char));
-  char *token;
-
-
-  if (!tokens)
-  {
-    fprintf(stderr, "[gash]: Erro ao alocar\n");
-    exit(EXIT_FAILURE);
-  }
-
-  token = strtok(line, GASH_TOK_DELIM);
-  while (token != NULL){
-    tokens[position] = token;
-    position++;
-
-    if (position >= bufsize){
-      bufsize += GASH_TOK_BUFFSIZE;
-      tokens = realloc(tokens, bufsize * sizeof(char*));
-      if (!tokens) {
-        fprintf(stderr, "[gash]: Erro ao alocar\n");
-        exit(EXIT_FAILURE);
-      }
-    }
-
-    token = strtok(NULL, GASH_TOK_DELIM);
-  }
-  tokens[position] = NULL;
-  return tokens;
-}
-
-
-char gash_read_line(void)
-{
-  int bufsize = gash_RL_BUFFSIZE;
-  int position = 0;
-  char *buffer = malloc(sizeof(char) * bufsize);
-  int c;
-
-  if (!buffer){
-    fprint(stderr, "[gash]: erro ao alocar\n");
-    exit(EXIT_FAILURE);
-  }
-
-  while (1) {
-
-    c = get.char();
-
-    if (c == EOF || c == "\n"){
-      buffer[position] = "\0";
-      return buffer;
-    } else {
-      buffer[position] = c;
-    }
-    position++;
-
-    if (position >= bufsize){
-      bufsize = gash_RL_BUFFSIZE;
-      buffer = realloc(buffer, bufsize);
-      if (!buffer)
-      {
-        fprintf(stderr, "[gash]: erro ao alocar\n");
-        exit(EXIT_FAILURE);
-      }
-    }
-  }
+    p("%s\n", buf);
+    pause();
+   }
+  return EXIT_SUCCESS;
 }
 

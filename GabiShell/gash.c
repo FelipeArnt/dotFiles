@@ -32,10 +32,30 @@ void gash_loop(void)
 }
 
 // Executor da shell 
-void gash_execute()
+void gash_launch(char **args)
 {
+  pid_t , wpid
+  int status;
+
+  pid = fork();
+  if (pid == 0){
+    //processo filho
+    if (execvp(args[0], args) == -1){
+      perror("[gash]");
+    }
+    exit(EXIT_FAILURE);
+  } else if (pid < 0) {
+    //erro no fork
+    perror("[gash]");
+  } else {
+    //processo pai
+    do {
+      wpid = waitpid(pid, &status, WUNTRACED);
+    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+  }
 //<!--TOOD--!> 
 }
+return 1;
 
 #define GASH_TOK_BUFFSIZE 64
 #define GASH_TOK_DELIM "\t\r\n\a"

@@ -1,11 +1,10 @@
 #include "gash.h"
-/* Corrigido: removido #include "utils.c" - nunca inclua arquivos .c */
 
 /* split que aloca dinamicamente */
 char **gash_split_line(char *line)
 {
     char **tokens;
-    size_t posicao = 0;  /* Corrigido: usar size_t para consistência */
+    size_t posicao = 0;  /* size_t para consistência */
     size_t bufsize = BUFSIZ;
 
     tokens = Malloc(bufsize * sizeof *tokens);
@@ -29,11 +28,11 @@ char *gash_read_line(void)
     size_t bufsize = 0;
     char cwd[BUFSIZ];
 
-    if (!Getcwd(cwd, sizeof(cwd))) {  /* Corrigido: verifica retorno */
+    if (!Getcwd(cwd, sizeof(cwd))) {  /* verifica retorno */
         strcpy(cwd, "?");  /* Fallback se getcwd falhar */
     }
 
-    p(G "[ <3 ] %s" RST " >. ", cwd);
+    p(G "[te amo gabi <3] %s" RST " >. ", cwd);
 
     if (getline(&buf, &bufsize, stdin) == -1) {
         free(buf);

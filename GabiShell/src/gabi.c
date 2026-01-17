@@ -6,7 +6,6 @@
 #include <stdlib.h>          // Requisito para free(), malloc(), realloc() e exit()
 #include <string.h>          // Requisito para strcmp()
 #include "gash.h"
-/*---[Gash]---*/
 
 /*
  * Shell builtins
@@ -55,9 +54,9 @@ int gash_help(char **args)
 {
     (void)args;  // Evita warning de unused parameter
     
-    printf("[gash] - [GabiShell] by FelipeArnt\n");
-    printf("[gash]: Digite nome de programas, argumentos e pressione enter!!\n");
-    printf("[gash:builtins]:  \n");
+    printf(Y"\n[GabiShell] by FelipeArnt\n");
+    //printf(G"[gash]: Digite nome de programas, argumentos e pressione enter!!\n");
+    printf(RST"[comandos]:  \n");
 
     for (int i = 0; i < gash_num_builtins(); i++) {
         printf(" %s\n", builtin_str[i]);
@@ -99,7 +98,7 @@ int gash_exit(char **args)
 
 int gash_launch(char **args)
 {
-    pid_t pid, wpid;
+    pid_t pid;
     int status;
 
     pid = fork();
@@ -115,7 +114,7 @@ int gash_launch(char **args)
     } else {
         /* processo pai */
         do {
-            wpid = waitpid(pid, &status, WUNTRACED);
+            waitpid(pid, &status, WUNTRACED);
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
     return 1;
@@ -146,9 +145,9 @@ void gash_loop(void)
     do {
         char cwd[1024];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            printf(G "[ <3 ] %s " RST "> ", cwd);
+            printf(G "[GABI<3] %s " RST "> ", cwd);
         } else {
-            printf(G "[ <3 ] ? " RST "> ");
+            printf(G "[GABI<3] ? " RST "> ");
         }
 
         line = gash_read_line();

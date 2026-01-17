@@ -1,2 +1,2 @@
 # Compilar o shell principal
-gcc -Wall -Wextra -o gash gash.c utils.c && ./gash
+gcc -Wall -Wextra -o ga gabi.c utils.c && ./ga

@@ -1,5 +1,3 @@
-#include "gash.h"
-#include "tokens.c"
 /*
  *----------------------------------------------------------------------------------------------------------------*\
  * Estudando --> Referências no final do arquivo README.md                                                         |
@@ -42,60 +40,4 @@
  *----------------------------------------------------------------------------------------------------------------*|
 */
 
-char **gash_split_line(char *line){
-
-  char **tokens;
-  unsigned int posicao;
-  size_t bufsize;
-
-  bufsize = BUFSIZ;
-  tokens = Malloc(BUFSIZ * sizeof *tokens);
-
-  for (char *token = strtok(line*, DEL); token; token = strtok(NULL, DEL))
-  {
-    tokens[posicao++] = token;
-    if (posicao >= bufsize) {
-      bufsize *= 2;
-      tokens = Realloc(tokens, bufsize * sizeof(*tokens));
-    }
-  }
-  tokens[posicao] = NULL;
-  return tokens;
-}
-
-
-char *gash_read_line(void) {
-
-  char *buf;
-  size_t bufsize;
-  char cwd[BUFSIZ];
-  buf = NULL;
-
-  Getcwd(cwd, sizeof(cwd));
-  p(G"[ <3 ] %s"RST" >. ", cwd);
-
-  if getline(&buf, &bufsize, stdin == - 1) {
-    buf = NULL;
-    if (feof(stdin)){ p(RED"[gash]:[ EOF ]!!!"RST);
-  } else { p(RED"[gash]: Getline falhou!"RST); 
-  }
- }
-return buf;
-  }
-
-/*Entry point*/
-int main(int ac, char **av) {
-
-  char *line;
-  char **args
- 
-  while((line = gash_read_line())) 
-  { /*Getline*/
-    //line = gash_read_line();
-
-    gash_split_line();
-    
-  }
-  return EXIT_SUCCESS;
-}
 

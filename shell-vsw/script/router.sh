@@ -58,8 +58,8 @@ exec_ensaio() {
   log "Iniciando ensaios funcionais no dispostivo..."
   # Apenas nmap por enquanto
   sudo nmap -sV "$IP" >"${OUTPUT_DIR}/${PREFIXO}_sV.txt"
-  sudo nmap -webxml -oX vuln.xml -v --script vuln "$IP"
-  sudo nmap -sV --script -v vulners.xml "$IP"
+  sudo nmap -sV -webxml -oX vuln.xml -v --script vuln "$IP"
+  sudo nmap -sV -webxml -oX vulners.xml --script -v vulners "$IP"
   sudo nmap -webxml -oX vulscan.xml -v -sV --script=vulscan/vulscan.nse "$IP"
 }
 
